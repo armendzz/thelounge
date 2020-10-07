@@ -3,25 +3,6 @@
 		You are not connected to any networks yet.
 	</div>
 	<div v-else ref="networklist">
-		<div class="jump-to-input">
-			<input
-				ref="searchInput"
-				:value="searchText"
-				placeholder="Jump to..."
-				type="search"
-				class="search input mousetrap"
-				aria-label="Search among the channel list"
-				tabindex="-1"
-				@input="setSearchText"
-				@keydown.up="navigateResults($event, -1)"
-				@keydown.down="navigateResults($event, 1)"
-				@keydown.page-up="navigateResults($event, -10)"
-				@keydown.page-down="navigateResults($event, 10)"
-				@keydown.enter="selectResult"
-				@keydown.escape="deactivateSearch"
-				@focus="activateSearch"
-			/>
-		</div>
 		<div v-if="searchText" class="jump-to-results">
 			<div v-if="results.length">
 				<div
@@ -75,22 +56,6 @@
 				class="network"
 				role="region"
 			>
-				<NetworkLobby
-					:network="network"
-					:is-join-channel-shown="network.isJoinChannelShown"
-					:active="
-						$store.state.activeChannel &&
-						network.channels[0] === $store.state.activeChannel.channel
-					"
-					@toggle-join-channel="network.isJoinChannelShown = !network.isJoinChannelShown"
-				/>
-				<JoinChannel
-					v-if="network.isJoinChannelShown"
-					:network="network"
-					:channel="network.channels[0]"
-					@toggle-join-channel="network.isJoinChannelShown = !network.isJoinChannelShown"
-				/>
-
 				<Draggable
 					draggable=".channel-list-item"
 					ghost-class="ui-sortable-ghost"
@@ -104,6 +69,7 @@
 					@start="onDragStart"
 					@end="onDragEnd"
 				>
+					<strong id="networku">AlbaChat:</strong>
 					<template v-for="(channel, index) in network.channels">
 						<Channel
 							v-if="index > 0"
@@ -123,65 +89,12 @@
 </template>
 
 <style>
-.jump-to-input {
-	margin: 8px;
-	position: relative;
-}
-
-.jump-to-input .input {
-	margin: 0;
-	width: 100%;
-	border: 0;
-	color: #fff;
-	background-color: rgba(255, 255, 255, 0.1);
-	padding-right: 35px;
-}
-
-.jump-to-input .input::placeholder {
-	color: rgba(255, 255, 255, 0.35);
-}
-
-.jump-to-input::before {
-	content: "\f002"; /* http://fontawesome.io/icon/search/ */
-	color: rgba(255, 255, 255, 0.35);
-	position: absolute;
-	right: 8px;
-	top: 0;
-	bottom: 0;
-	pointer-events: none;
-	line-height: 35px !important;
-}
-
-.jump-to-results {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	overflow: auto;
-}
-
-.jump-to-results .no-results {
-	margin: 14px 8px;
-	text-align: center;
-}
-
-.jump-to-results .channel-list-item.active {
-	cursor: pointer;
-}
-
-.jump-to-results .channel-list-item .add-channel,
-.jump-to-results .channel-list-item .close-tooltip {
-	display: none;
-}
-
-.jump-to-results .channel-list-item[data-type="lobby"] {
-	padding: 8px 14px;
-}
-
-.jump-to-results .channel-list-item[data-type="lobby"]::before {
-	content: "\f233";
+#networku {
+	margin-top: 10px;
+	padding-left: 5px;
+	color: white !important;
 }
 </style>
-
 <script>
 import Mousetrap from "mousetrap";
 import Draggable from "vuedraggable";

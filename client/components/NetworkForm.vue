@@ -1,19 +1,10 @@
 <template>
 	<div id="connect" class="window" role="tabpanel" aria-label="Connect">
-		<div class="header">
-			<SidebarToggle />
-		</div>
 		<form class="container" method="post" action="" @submit.prevent="onSubmit">
 			<h1 class="title">
 				<template v-if="defaults.uuid">
 					<input v-model="defaults.uuid" type="hidden" name="uuid" />
 					Edit {{ defaults.name }}
-				</template>
-				<template v-else>
-					Connect
-					<template v-if="config.lockNetwork && $store.state.serverConfiguration.public">
-						to {{ defaults.name }}
-					</template>
 				</template>
 			</h1>
 			<template v-if="!config.lockNetwork">
@@ -130,7 +121,6 @@
 				</div>
 			</template>
 
-			<h2>User preferences</h2>
 			<div class="connect-row">
 				<label for="connect:nick">Nick</label>
 				<input
@@ -144,29 +134,7 @@
 					@input="onNickChanged"
 				/>
 			</div>
-			<template v-if="!config.useHexIp">
-				<div class="connect-row">
-					<label for="connect:username">Username</label>
-					<input
-						id="connect:username"
-						ref="usernameInput"
-						v-model="defaults.username"
-						class="input username"
-						name="username"
-						maxlength="100"
-					/>
-				</div>
-			</template>
-			<div class="connect-row">
-				<label for="connect:realname">Real name</label>
-				<input
-					id="connect:realname"
-					v-model="defaults.realname"
-					class="input"
-					name="realname"
-					maxlength="300"
-				/>
-			</div>
+
 			<template v-if="defaults.uuid && !$store.state.serverConfiguration.public">
 				<div class="connect-row">
 					<label for="connect:commands">
@@ -190,17 +158,6 @@ the server tab on new connection"
 					/>
 				</div>
 			</template>
-			<template v-else-if="!defaults.uuid">
-				<div class="connect-row">
-					<label for="connect:channels">Channels</label>
-					<input
-						id="connect:channels"
-						v-model="defaults.join"
-						class="input"
-						name="join"
-					/>
-				</div>
-			</template>
 
 			<template v-if="$store.state.serverConfiguration.public">
 				<template v-if="config.lockNetwork">
@@ -208,13 +165,13 @@ the server tab on new connection"
 						<label></label>
 						<div class="input-wrap">
 							<label class="tls">
-								<input v-model="displayPasswordField" type="checkbox" />
-								I have a password
+								<input id="reg" v-model="displayPasswordField" type="checkbox" />
+								Jam i regjistruar
 							</label>
 						</div>
 					</div>
 					<div v-if="displayPasswordField" class="connect-row">
-						<label for="connect:password">Password</label>
+						<label for="connect:password"></label>
 						<RevealPassword
 							v-slot:default="slotProps"
 							class="input-wrap password-container"
@@ -225,7 +182,7 @@ the server tab on new connection"
 								v-model="defaults.password"
 								class="input"
 								:type="slotProps.isVisible ? 'text' : 'password'"
-								placeholder="Server password (optional)"
+								placeholder="Shkruaj Passwordin"
 								name="password"
 								maxlength="300"
 							/>

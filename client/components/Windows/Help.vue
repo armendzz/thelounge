@@ -4,7 +4,7 @@
 			<SidebarToggle />
 		</div>
 		<div class="container">
-			<h1 class="title">Help</h1>
+			<h1 class="title">Ndihme</h1>
 
 			<h2 class="help-version-title">
 				<span>About The Lounge</span>
